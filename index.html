@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Munich Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+  <style>
+    body { margin:0; padding:0; }
+    #map { width:100%; height:100vh; }
+    .mapboxgl-popup { max-width: 200px; }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1Ijoib3B0aW1pc3RvZmZpY2UiLCJhIjoiY21peXFybGF3MGhybjNsczZpMDg2b3N5cCJ9.f-hLLLsAgh_eD41xZbaCTA';
+
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v12',
+    center: [11.576, 48.137], // Centered between Marienplatz and Isartor
+    zoom: 15
+  });
+
+  const geojson = {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "title": "Marienplatz",
+          "url": "/marienplatz"  // relative Cargo page URL
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [11.5755, 48.1374]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "title": "Isartor",
+          "url": "/isartor"  // relative Cargo page URL
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [11.5835, 48.1356]
+        }
+      }
+    ]
+  };
+
+  geojson.features.forEach(function(feature) {
+    const popup = new mapboxgl.Popup({ offset: 25 })
+      .setText(feature.properties.title);
+
+    const marker = new mapboxgl.Marker()
+      .setLngLat(feature.geometry.coordinates)
+      .setPopup(popup)
+      .addTo(map);
+
+    // Clicking marker opens the Cargo page (relative link)
+    marker.getElement().addEventListener('click', () => {
+      window.location.href = feature.properties.url; // navigates within the same Cargo site
+    });
+  });
+</script>
+</body>
+</html>
