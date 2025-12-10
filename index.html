@@ -54,13 +54,33 @@
   };
 
   geojson.features.forEach(function(feature) {
-    const popup = new mapboxgl.Popup({ offset: 25 })
-      .setText(feature.properties.title);
+  const popup = new mapboxgl.Popup({
+    offset: 25,
+    closeButton: false,
+    closeOnClick: false
+  }).setText(feature.properties.title);
 
-    const marker = new mapboxgl.Marker()
-      .setLngLat(feature.geometry.coordinates)
-      .setPopup(popup)
-      .addTo(map);
+  const marker = new mapboxgl.Marker()
+    .setLngLat(feature.geometry.coordinates)
+    .addTo(map);
+
+  const el = marker.getElement();
+
+  // Show popup on hover
+  el.addEventListener('mouseenter', () => {
+    popup.setLngLat(feature.geometry.coordinates).addTo(map);
+  });
+
+  // Hide popup on mouse leave
+  el.addEventListener('mouseleave', () => {
+    popup.remove();
+  });
+
+  // Navigate on click
+  el.addEventListener('click', () => {
+    window.location.href = feature.properties.url;
+  });
+});
 
     // Clicking marker opens the Cargo page (relative link)
     marker.getElement().addEventListener('click', () => {
