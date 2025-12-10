@@ -1,28 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Munich Map</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
-  <style>
-    body { margin:0; padding:0; }
-    #map { width:100%; height:100vh; }
-    .mapboxgl-popup { max-width: 200px; }
-  </style>
+<meta charset="UTF-8">
+<title>Munich Map</title>
+
+<!-- Mapbox CSS -->
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  #map {
+    width: 100%;
+    height: 100vh;
+  }
+</style>
+
 </head>
 <body>
+
 <div id="map"></div>
 
-<script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+<!-- Mapbox JS -->
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+
 <script>
   mapboxgl.accessToken = 'pk.eyJ1Ijoib3B0aW1pc3RvZmZpY2UiLCJhIjoiY21peXFybGF3MGhybjNsczZpMDg2b3N5cCJ9.f-hLLLsAgh_eD41xZbaCTA';
 
   const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/optimistoffice/cmj05koex005601sacfglaog9',
-    center: [11.576, 48.137], // Centered between Marienplatz and Isartor
-    zoom: 12
+    style: 'mapbox://styles/optimistoffice/cmj05koex005601sacfglaog9',  // replace with your custom style
+    center: [11.57549, 48.13743],                          // Munich – Marienplatz
+    zoom: 13
   });
 
   const geojson = {
@@ -53,40 +64,37 @@
     ]
   };
 
-  geojson.features.forEach(function(feature) {
-  const popup = new mapboxgl.Popup({
-    offset: 25,
-    closeButton: false,
-    closeOnClick: false
-  }).setText(feature.properties.title);
+  geojson.features.forEach(function (feature) {
 
-  const marker = new mapboxgl.Marker()
-    .setLngLat(feature.geometry.coordinates)
-    .addTo(map);
+    const marker = new mapboxgl.Marker()
+      .setLngLat(feature.geometry.coordinates)
+      .addTo(map);
 
-  const el = marker.getElement();
+    const popup = new mapboxgl.Popup({
+      offset: 25,
+      closeButton: false,
+      closeOnClick: false
+    }).setText(feature.properties.title);
 
-  // Show popup on hover
-  el.addEventListener('mouseenter', () => {
-    popup.setLngLat(feature.geometry.coordinates).addTo(map);
-  });
+    const el = marker.getElement();
 
-  // Hide popup on mouse leave
-  el.addEventListener('mouseleave', () => {
-    popup.remove();
-  });
+    // Hover: show label
+    el.addEventListener('mouseenter', () => {
+      popup.setLngLat(feature.geometry.coordinates).addTo(map);
+    });
 
-  // Navigate on click
-  el.addEventListener('click', () => {
-    window.location.href = feature.properties.url;
-  });
-});
+    // Hover off: hide label
+    el.addEventListener('mouseleave', () => {
+      popup.remove();
+    });
 
-    // Clicking marker opens the Cargo page (relative link)
-    marker.getElement().addEventListener('click', () => {
-      window.location.href = feature.properties.url; // navigates within the same Cargo site
+    // Click: go to Cargo page
+    el.addEventListener('click', () => {
+      window.location.href = feature.properties.url;
     });
   });
 </script>
+
 </body>
 </html>
+
