@@ -12,9 +12,45 @@
     margin: 0;
     padding: 0;
   }
+
   #map {
     width: 100%;
     height: 100vh;
+  }
+
+  /* ------------------- */
+  /* CUSTOM MARKER STYLE */
+  /* ------------------- */
+
+  .custom-marker {
+    width: 12px;
+    height: 12px;
+    background-color: black;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .custom-marker:hover {
+    transform: scale(1.4);
+  }
+
+  /* ------------------- */
+  /* CUSTOM POPUP STYLE */
+  /* ------------------- */
+
+  .mapboxgl-popup-content {
+    background: white;
+    color: black;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .mapboxgl-popup-tip {
+    display: none;
   }
 </style>
 
@@ -66,15 +102,24 @@
 
   geojson.features.forEach(function (feature) {
 
-    const marker = new mapboxgl.Marker()
-      .setLngLat(feature.geometry.coordinates)
-      .addTo(map);
+   // Create custom HTML element
+const el = document.createElement('div');
+el.className = 'custom-marker';
 
-    const popup = new mapboxgl.Popup({
-      offset: 25,
-      closeButton: false,
-      closeOnClick: false
-    }).setText(feature.properties.title);
+// Create marker using custom element
+const marker = new mapboxgl.Marker(el)
+  .setLngLat(feature.geometry.coordinates)
+  .addTo(map);
+
+   const popup = new mapboxgl.Popup({
+  offset: 15,
+  closeButton: false,
+  closeOnClick: false
+}).setHTML(`
+  <div class="popup-content">
+    ${feature.properties.title}
+  </div>
+`);
 
     const el = marker.getElement();
 
