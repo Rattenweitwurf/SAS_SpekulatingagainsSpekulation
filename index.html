@@ -22,42 +22,19 @@
   /* CUSTOM MARKER STYLE */
   /* ------------------- */
 
- .custom-marker {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
+   .custom-marker {
+    width: 12px;
+    height: 12px;
+    background-color: black;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
 
-.custom-marker::before,
-.custom-marker::after {
-  content: '';
-  position: absolute;
-  background-color: black;
-}
+  .custom-marker:hover {
+    transform: scale(1.4);
+  }
 
-/* Vertical line */
-.custom-marker::before {
-  width: 3px;
-  height: 18px;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-}
-
-/* Horizontal line */
-.custom-marker::after {
-  width: 18px;
-  height: 3px;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-}
-
-.custom-marker:hover {
-  transform: scale(1.2);
-}
 
   /* ------------------- */
   /* CUSTOM POPUP STYLE */
@@ -109,7 +86,6 @@
           "type": "Point",
           "coordinates": [11.567768, 48.157715]
         }
-  /* ------------------- */
       },
        {
         "type": "Feature",
@@ -121,7 +97,6 @@
           "type": "Point",
           "coordinates": [11.589052, 48.161555]
         }
-  /* ------------------- */
       },
        {
         "type": "Feature",
@@ -133,7 +108,6 @@
           "type": "Point",
           "coordinates": [11.572615, 48.162548]
         }
-  /* ------------------- */
       },
        {
         "type": "Feature",
@@ -145,7 +119,6 @@
           "type": "Point",
           "coordinates": [11.565752, 48.124164]
         }
-  /* ------------------- */
       },
       {
         "type": "Feature",
