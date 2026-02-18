@@ -53,8 +53,8 @@
     display: none;
   }
 </style>
-
 </head>
+
 <body>
 
 <div id="map"></div>
@@ -67,8 +67,8 @@
 
   const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v11',  // replace with your custom style
-    center: [11.57549, 48.13743],                          // Munich – Marienplatz
+    style: 'mapbox://styles/mapbox/light-v11',
+    center: [11.57549, 48.13743], // Munich – Marienplatz
     zoom: 13
   });
 
@@ -79,7 +79,7 @@
         "type": "Feature",
         "properties": {
           "title": "Agnesstraße 48",
-          "url": "https://035660-copy.cargo.site/agnesstraße-48"  // relative Cargo page URL
+          "url": "https://035660-copy.cargo.site/agnesstraße-48"
         },
         "geometry": {
           "type": "Point",
@@ -90,7 +90,7 @@
         "type": "Feature",
         "properties": {
           "title": "Pappenheimstraße 14",
-          "url": "/isartor"  // relative Cargo page URL
+          "url": "/isartor"
         },
         "geometry": {
           "type": "Point",
@@ -102,26 +102,25 @@
 
   geojson.features.forEach(function (feature) {
 
-   // Create custom HTML element
-const el = document.createElement('div');
-el.className = 'custom-marker';
+    // Create custom marker element
+    const el = document.createElement('div');
+    el.className = 'custom-marker';
 
-// Create marker using custom element
-const marker = new mapboxgl.Marker(el)
-  .setLngLat(feature.geometry.coordinates)
-  .addTo(map);
+    // Create marker
+    const marker = new mapboxgl.Marker(el)
+      .setLngLat(feature.geometry.coordinates)
+      .addTo(map);
 
-   const popup = new mapboxgl.Popup({
-  offset: 15,
-  closeButton: false,
-  closeOnClick: false
-}).setHTML(`
-  <div class="popup-content">
-    ${feature.properties.title}
-  </div>
-`);
-
-    const el = marker.getElement();
+    // Create popup
+    const popup = new mapboxgl.Popup({
+      offset: 15,
+      closeButton: false,
+      closeOnClick: false
+    }).setHTML(`
+      <div class="popup-content">
+        ${feature.properties.title}
+      </div>
+    `);
 
     // Hover: show label
     el.addEventListener('mouseenter', () => {
@@ -137,9 +136,9 @@ const marker = new mapboxgl.Marker(el)
     el.addEventListener('click', () => {
       window.location.href = feature.properties.url;
     });
+
   });
 </script>
 
 </body>
 </html>
-
