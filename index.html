@@ -26,7 +26,6 @@
     width: 12px;
     height: 12px;
     background-color: rgba(255, 0, 0, 0.85);
-    filter: blur(2px);
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.1s ease;
@@ -34,6 +33,7 @@
 
   .custom-marker:hover {
     transform: scale(1.4);
+    filter: blur(2px);
   }
 
 
@@ -42,9 +42,9 @@
   /* ------------------- */
 
   .mapboxgl-popup-content {
-    background: white;
-    color: black;
-    font-family: Helvetica, Arial, sans-serif;
+    background: none;
+    color: rgba(255, 0, 0, 0.85) ;
+    font-family: Diatype, Mono, Bold;
     font-size: 13px;
     padding: 6px 10px;
     border-radius: 0;
